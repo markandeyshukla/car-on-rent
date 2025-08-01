@@ -10,7 +10,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 dbconnect();
 app.use(cors({
-  origin: "http://127.0.0.1:5500", // ← yahaan apne frontend ka address daalo
+  origin: "https://gadilejao.netlify.app", // ← yahaan apne frontend ka address daalo
   credentials: true // agar cookies/session use kar rahe ho to
 }));
 
