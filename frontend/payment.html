@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Car Booking Payment</title>
+
+  <link rel="stylesheet" href="payment.css">
+</head>
+
+<body>
+  <h1 class="payment-page-heading">Confirm Booking</h1>
+  <div class="car-design">
+    <div id="carDetails" class="car-box"></div>
+    <div id="cardescription"></div>
+  </div>
+
+  <form id="paymentForm" class="payment-form-page">
+    <label class="customer-detail-payment">Customer Name: <input class="customer-detail-form" type="text"
+        name="customerName" required></label>
+    <label class="customer-detail-payment">Pickup Address: <input class="customer-detail-form" type="text"
+        name="pickupAddress" required></label>
+    <label class="customer-detail-payment">Contact Number: <input class="customer-detail-form" type="text"
+        name="contactNumber" required></label>
+    <label class="customer-detail-payment">Duration (hours): <input class="customer-detail-form" type="number"
+        name="duration" required min="1" id="durationInput"></label>
+
+    <div style="display: flex;">
+      <label class="customer-detail-payment">Payment Type:</label>
+      <label><input class="customer-payment-method" type="radio" name="paymentType" value="online" required>
+        Online</label>
+      <label><input class="customer-payment-method" type="radio" name="paymentType" value="cod"> Cash on
+        Delivery</label>
+
+    </div>
+    <div id="totalPriceBox" style="margin-top:10px;">Total Price: ₹<span id="totalPrice">0</span></div>
+    <div id="qrBox" style="margin-top: 10px;"></div>
+
+    <button type="submit" class="book-ride-btn"><b>Book Now</b></button>
+  </form>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const carId = params.get("carId");
+
+    let selectedCar = null;
+    const durationInput = document.getElementById("durationInput");
+    const totalPriceSpan = document.getElementById("totalPrice");
+    const token = localStorage.getItem("token");
+    let customerEmail = "";
+    if (token) {
+      try {
+        const base64Url = token.split('.')[1];
+        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        const payload = JSON.parse(atob(base64));
+        customerEmail = payload.email || "";
+      } catch (err) {
+        console.error("Token decode failed", err);
+      }
+    }
+
+    if (!carId) {
+      alert("No car selected.");
+    } else {
+      fetch(`http://localhost:5000/api/cars/${carId}`)
+        .then(res => res.json())
+        .then(car => {
+          if (!car || car.message === "Car not found") {
+            alert("Car not found");
+            return;
+          }
+          selectedCar = car;
+
+          document.getElementById("carDetails").innerHTML = `
+          <img src="${car.imageUrl}" alt="${car.name}" width="300">`;
+          document.getElementById("cardescription").innerHTML = `
+          <b>${car.brand} ${car.name}</b><br>
+          ₹${car.pricePerHour}/hour<br><br>
+          ${car.fuelType}, ${car.seats} seater
+        `;
+        })
+        .catch(() => alert("Error fetching car data"));
+    }
+
+    durationInput.addEventListener("input", () => {
+      if (selectedCar) {
+        const price = selectedCar.pricePerHour * Number(durationInput.value);
+        totalPriceSpan.textContent = price || 0;
+      }
+    });
+
+    document.querySelectorAll('input[name="paymentType"]').forEach(radio => {
+      radio.addEventListener("change", () => {
+        const paymentType = document.querySelector('input[name="paymentType"]:checked').value;
+        const price = totalPriceSpan.textContent;
+
+        if (paymentType === "online") {
+          const upiId = "btw.its.markandey@okaxis";
+          const name = "car on rent";
+          const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(name)}&am=${price}&cu=INR`;
+          const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?data=${encodeURIComponent(upiUrl)}&size=200x200`;
+
+          document.getElementById("qrBox").innerHTML = `<img src="${qrUrl}" alt="UPI QR Code"><br>Scan to pay ₹${price}`;
+        } else {
+          document.getElementById("qrBox").innerHTML = "";
+        }
+      });
+    });
+
+    document.getElementById("paymentForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = {
+        customerName: e.target.customerName.value,
+        pickupAddress: e.target.pickupAddress.value,
+        contactNumber: e.target.contactNumber.value,
+        duration: Number(e.target.duration.value),
+        totalPrice: Number(totalPriceSpan.textContent),
+        paymentType: document.querySelector('input[name="paymentType"]:checked').value,
+        carId: carId,
+        driverName: selectedCar.driverName,
+        driverNumber: selectedCar.driverNumber,
+        carNumber: selectedCar.carNumber,
+        imageUrl: selectedCar.imageUrl,
+        carName: selectedCar.name,
+        brand: selectedCar.brand,
+        customerEmail: customerEmail
+      };
+
+      const res = await fetch("http://localhost:5000/api/payment", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData)
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        alert("Booking successful!");
+        e.target.reset();
+        document.getElementById("qrBox").innerHTML = "";
+        totalPriceSpan.textContent = "0";
+        window.location.href = "carDetail.html";
+      } else {
+        alert(data.message || "Booking failed");
+      }
+    });
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HomePage</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <div class="homepage-main-div">
+    <div class="homepage-form-div">
+
+      <h1 class="text-homepage">Car On Rent</h1>
+      <form action="submit" class="form-homepage" onsubmit="handleFormSubmit(event)">
+
+        <input class="form-search-car" type="number" id="pincode" name="pincode" placeholder="pickup location pincode"
+          required>
+        <label><strong>Choose Seater Type</strong></label>
+        <div>
+          <label for="seaterType" class="form-select-seater"> <input type="radio" name="seatertype" value="5" required>5
+            Seater
+          </label>
+          <label for="seaterType" class="form-select-seater"> <input type="radio" name="seatertype" value="7">7 Seater
+          </label>
+          <label for="seaterType" class="form-select-seater"> <input type="radio" name="seatertype" value="9">9 Seater
+          </label>
+        </div>
+        <label for="Date"> <strong>Date & Time</strong></label>
+        <input class="form-search-car" type="datetime-local" id="date" name="date" placeholder="Date & Time" required>
+        <button class="form-search-car-btn" type="submit">Search Car</button>
+      </form>
+      <div class="login-signup-btn">
+        <span class="signup-btn-homepage" id="hide"><a href="signup.html" class="signup-btn-homepage">New?Join
+            Us</a></span>
+        <span class="login-btn-homepage" id="hidden"><a href="login.html" class="login-btn-homepage">Already Login!
+            clicked me</a></span>
+        <span class="logout-btn-homepage"><button id="logoutBtn" class="logout-btn"
+            onclick="logout()">Logout</button></span>
+      </div>
+    </div>
+    <div class="homepage-image-div"></div>
+  </div>
+  <script src="./script.js"></script>
+</body>
+</html>

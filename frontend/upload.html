@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rent Your Car</title>
+    <link rel="stylesheet" href="upload.css" />
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+</head>
+
+<body>
+
+    <h2 style="text-align: center;">
+        Please connect with our company <br> to rent your car on our portal
+    </h2>
+
+    <div class="upload-car-main">
+        <form action="#" class="Upload-car-form" id="uploadcar">
+            <img id="previewImg" class="imgpreview-upload-car" src="" alt="Preview will appear here" width="200" />
+
+            <input class="upload-car-form-detail" type="text" name="brand" placeholder="Enter Your car Brand"
+                required />
+            <input class="upload-car-form-detail" type="text" name="name" placeholder="Enter Your Car Model Name"
+                required />
+            <input class="upload-car-form-detail" type="number" name="pricePerHour" placeholder="Enter Price Per Hour"
+                required />
+            <input class="upload-car-form-detail" type="text" name="fuelType"
+                placeholder="Enter fuel type (petrol/diesel/electric)" required />
+            <input class="upload-car-form-detail" type="text" name="carNumber" placeholder="Car Number" required />
+            <input class="upload-car-form-detail" type="text" name="pincode"
+                placeholder="Enter Pincode Where Car is Available" required />
+            <input id="imgUrlInput" class="upload-car-form-detail" type="text" name="imageUrl"
+                placeholder="Enter car image URL" required />
+            <div>
+                <input class="upload-car-radio" type="radio" name="seats" value="5" required>5 Seater
+                <input class="upload-car-radio" type="radio" name="seats" value="7">7 Seater
+                <input class="upload-car-radio" type="radio" name="seats" value="9">9 Seater
+            </div>
+            <input class="upload-car-form-detail-btn" type="submit" value="Rent My Car" />
+        </form>
+    </div>
+
+    <script>
+        let userRole = null;
+        const token = localStorage.getItem("token");
+
+        if (token) {
+            try {
+                const decoded = jwt_decode(token);
+                userRole = decoded.role;
+            } catch (err) {
+                alert("Invalid token, please login again.");
+            }
+        }
+        const imgInput = document.getElementById("imgUrlInput");
+        const imgElement = document.getElementById("previewImg");
+
+        imgInput?.addEventListener("input", function () {
+            imgElement.src = imgInput.value.trim();
+        });
+        document.getElementById("uploadcar").addEventListener("submit", async function (e) {
+            e.preventDefault();
+            if (userRole !== "admin") {
+                alert("ADMIN ACCESS ONLY! Please contact our Team for listing your Car For Rent.");
+                return;
+            }
+
+            const data = {
+                brand: this.brand.value,
+                name: this.name.value,
+                pricePerHour: this.pricePerHour.value,
+                seats: this.seats.value,
+                fuelType: this.fuelType.value,
+                carNumber: this.carNumber.value,
+                pincode: this.pincode.value,
+                imageUrl: this.imageUrl.value
+            };
+
+            try {
+                const res = await fetch("http://localhost:5000/api/cars", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (res.ok) {
+                    alert("Car listed successfully!");
+                    this.reset();
+                    imgElement.src = "";
+                    window.location.href = "index.html";
+                } else {
+                    const err = await res.json();
+                    alert("Error: " + (err.message || "Upload failed"));
+                }
+            } catch (err) {
+                alert("Server error: " + err.message);
+            }
+        });
+    </script>
+</body>
+
+</html>

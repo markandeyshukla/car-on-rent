@@ -1,0 +1,75 @@
+.payment-page-heading {
+    text-align: center;
+}
+
+.car-box {
+    margin-bottom: 20px;
+}
+
+.car-design {
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+#cardescription {
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+.payment-form-page {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.customer-detail-payment {
+    font-family: cursive;
+    font-size: large;
+}
+
+.customer-detail-form {
+    width: 330px;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+    border-bottom: 2px solid black;
+    margin-bottom: 5px;
+}
+
+.customer-payment-method {
+    display: inline-grid;
+    width: 80px;
+    margin-bottom: 10px;
+}
+
+.book-ride-btn {
+    width: 330px;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+    background-color: lightgray;
+}
+
+.book-ride-btn:active {
+    background-color: lightgreen;
+    transform: scale(0.95);
+    transition: all 0s ease-in;
+}
+
+@media(max-width:480px) {
+    .car-design {
+        text-align: center;
+        flex-direction: column;
+    }
+
+    .customer-payment-method {
+        width: 30px;
+    }
+}

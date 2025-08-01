@@ -1,0 +1,157 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.text-homepage {
+    margin-bottom: 45px;
+    color: black;
+    text-shadow: 0 0 2px #ff0, 0 0 5px #ff0;
+}
+
+.homepage-main-div {
+    margin: 0;
+    background: linear-gradient(to top, #ffcc70, #ff8177, #e9abae, #e89ca0);
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    border: none;
+}
+
+.homepage-form-div {
+    width: 450px;
+    height: 500px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    box-shadow: -5px 5px 15px rgba(0, 0, 0, 0.35);
+
+}
+
+.form-homepage {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    text-align: center;
+}
+
+.form-search-car {
+    width: 330px;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+    border-bottom: 2px solid black;
+    margin-bottom: 5px;
+}
+
+.form-select-seater {
+    display: inline-grid;
+    width: 80px;
+    margin-bottom: 10px;
+}
+
+.form-search-car-btn {
+    width: 330px;
+    height: 30px;
+    border: none;
+    cursor: pointer;
+    background-color: lightgray;
+}
+
+.form-search-car-btn:active {
+    background-color: lightgreen;
+    transform: scale(0.95);
+    transition: all 0s ease-in;
+}
+
+.homepage-image-div {
+    background-image: url(car.jpg);
+    width: 450px;
+    height: 500px;
+    background-size: cover;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.35);
+}
+
+.login-btn-homepage {
+    cursor: pointer;
+    text-align: start;
+    text-decoration: none;
+}
+
+.signup-btn-homepage {
+    cursor: pointer;
+    text-align: end;
+    text-decoration: none;
+    width: 320px;
+}
+
+.login-signup-btn {
+    display: flex;
+    flex-direction: column;
+    height: 15px;
+    width: 320px;
+}
+
+.logout-btn-homepage {
+    text-align: end;
+}
+
+.logout-btn {
+    cursor: pointer;
+    height: 30px;
+    background-color: lightgreen;
+    border: none;
+    margin-top: 20px;
+}
+
+.logout-btn:active {
+    background-color: rgb(252, 55, 55);
+}
+
+@media(max-width:768px) {
+    .homepage-form-div {
+        width: 50%;
+    }
+
+    .homepage-image-div {
+        width: 50%;
+    }
+}
+
+@media(max-width:480px) {
+    .homepage-form-div {
+        width: 100%;
+        height: 100%;
+    }
+
+    .homepage-main-div {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .homepage-image-div {
+        width: 100%;
+        background-size: 100% 100%;
+    }
+
+    .form-search-car {
+        width: 250px;
+    }
+
+    .form-search-car-btn {
+        width: 250px;
+    }
+
+    .signup-btn-homepage {
+        width: 280px;
+    }
+
+    .login-btn-homepage {
+        width: 280px;
+    }
+}

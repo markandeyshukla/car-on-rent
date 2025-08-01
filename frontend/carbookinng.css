@@ -1,0 +1,127 @@
+.car-main-main-booking {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+}
+
+.car-heading-booking {
+    text-shadow: 0 0 2px #ff0, 0 0 5px #ff0;
+    font-size: 30px;
+    text-align: center;
+}
+
+.car-main-booking {
+    height: 145px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: beige;
+    width: 85%;
+    margin: 0 auto;
+    padding: 20px;
+    align-items: center;
+    border-radius: 25px;
+    transition: all 0.5s ease-in-out;
+}
+
+.car-main-booking:hover {
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
+.car-image-booking {
+    background-image: url(triber.png);
+    height: 120px;
+    width: 160px;
+    background-size: cover;
+    border: 1px solid red;
+    border-radius: 12%;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+.car-detail-booking {
+    font-family: cursive;
+    font-size: 18px;
+    color: red;
+}
+
+.car-detail-booking ul li {
+    list-style: none;
+}
+
+.car-detail-booking ul li strong {
+    color: blue;
+    font-size: 20px;
+}
+
+.car-font-btn-booking {
+    display: flex;
+    text-align: center;
+    row-gap: 10px;
+    flex-direction: column;
+}
+
+.car-btn-booking {
+    background-color: limegreen;
+    border: none;
+    height: 30px;
+    cursor: pointer;
+    transition: all 0.1s ease-in;
+    width: 150px;
+}
+
+.car-btn-booking:active {
+    color: yellowgreen;
+    transform: scale(0.9);
+    color: black;
+}
+
+.upload-car-booking {
+    background-color: aliceblue;
+    height: 200px;
+    width: 200px;
+    border: blue 2px dashed;
+    border-radius: 15px;
+    margin: 0 auto;
+    margin-top: 20px;
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.img-upload {
+    height: 115px;
+    width: 115px;
+}
+
+.subupload-car-booking h3 {
+    text-align: center;
+    color: blue;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.upload-car-booking:hover {
+    background-color: lightblue;
+}
+
+@media(max-width:786px) {
+    .car-main-booking {
+        flex-direction: column;
+        height: 390px;
+        width: fit-content;
+    }
+
+    .car-main-main-booking {
+        flex-wrap: wrap;
+        display: flex;
+        flex-direction: row;
+    }
+}
+
+@media(max-width:480px) {
+    .car-main-booking {
+        flex-direction: column;
+        height: 390px;
+    }
+}

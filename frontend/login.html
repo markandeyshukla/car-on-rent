@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+    <div style="height: 100vh;">
+        <div class="header-loginpage">
+            <h3><a href="index.html" style="color: white; text-decoration: none;">Car on Rent</a></h3>
+        </div>
+        <div class="loginpage-main-div-ex">
+            <div class="loginpage-main-main">
+                <div class="loginpage-form-div">
+                    <form action="submit" class="loginpage-form" id="loginForm">
+                        <strong class="loginpage-text">Can I know Your Valid Email🕵️‍♀️</strong>
+                        <input class="loginpage-input" type="email" name="email"
+                            placeholder="Genuine Email You will Get car info">
+                        <input class="loginpage-input" type="password" name="password" placeholder="Password">
+                        <input class="loginpage-btn" type="submit" value="Login">
+                        <a href="signup.html" style="text-decoration: overline;">New User! Signup Here</a>
+                    </form>
+                    <div class="distance-logibpage-div"></div>
+                    <div class="distance-logibpage-div"></div>
+                    <div class="distance-loginpage-div"></div>
+                    <p class="terms-loginpage">
+                        By proceeding, you consent to get calls, WhatsApp or <br> SMS/RCS messages, including by
+                        automated means, <br> from Car on Rent and its affiliates to the number provided.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const email = e.target.email.value;
+            const password = e.target.password.value;
+
+            try {
+                const res = await fetch("http://localhost:5000/api/auth/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    localStorage.setItem("token", data.token);
+                    localStorage.setItem("userName", data.name);
+                    localStorage.setItem("userRole", data.role);
+                    localStorage.setItem("userEmail", data.email);
+                    console.log("useremail", data.email);
+                    console.log(data);
+
+                    alert("Login successful! Welcome, " + data.email);
+                    window.location.href = "index.html";
+                } else {
+                    alert(data.message || "Login failed");
+                }
+            } catch (error) {
+                console.error("Login error:", error);
+                alert("Server error. Try again later.");
+            }
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Signup</title>
+  <link rel="stylesheet" href="login.css" />
+</head>
+
+<body>
+  <div style="height: 100vh;">
+    <div class="header-loginpage">
+      <h3><a href="index.html" style="color: white; text-decoration: none;">Car on Rent</a></h3>
+    </div>
+    <div class="loginpage-main-div-ex">
+      <div class="loginpage-main-main">
+        <div class="loginpage-form-div">
+          <form class="loginpage-form" id="signupForm">
+            <strong class="loginpage-text">Let’s Get You Started 🚗</strong>
+
+            <input class="loginpage-input" type="text" name="name" placeholder="Your Name" required />
+
+            <input class="loginpage-input" type="email" name="email" placeholder="Genuine Email (for car info)"
+              required />
+
+            <input class="loginpage-input" type="password" name="password" placeholder="Password" required />
+
+            <input class="loginpage-input" type="password" name="confirmPassword" placeholder="Confirm Password"
+              required />
+
+            <input class="loginpage-btn" type="submit" value="Signup" />
+            <a href="login.html" style="text-decoration: overline;">Already Logged In! then Login Here</a>
+          </form>
+
+          <div class="distance-logibpage-div"></div>
+          <p class="terms-loginpage">
+            By proceeding, you consent to get calls, WhatsApp or <br> SMS/RCS messages, including by automated means,
+            <br> from Car on Rent and its affiliates to the number provided.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("signupForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const name = e.target.name.value.trim();
+      const email = e.target.email.value.trim();
+      const password = e.target.password.value;
+      const confirmPassword = e.target.confirmPassword.value;
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match!");
+        return;
+      }
+
+      try {
+        const res = await fetch("http://localhost:5000/api/auth/signup", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ name, email, password })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          alert("Signup successful! Welcome, " + data.name);
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("userName", data.name);
+          localStorage.setItem("userEmail", data.email);
+          console.log("userdata", data);  // extra, for reuse
+          window.location.href = "index.html";
+        } else {
+          alert(data.message || "Signup failed");
+        }
+      } catch (error) {
+        console.error("Signup error:", error);
+        alert("Server error. Try again later.");
+      }
+    });
+  </script>
+</body>
+
+</html>
