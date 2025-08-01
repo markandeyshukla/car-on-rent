@@ -13,6 +13,10 @@
 <body>
   <h2 class="car-heading-booking" id="userGreeting">Available Car For</h2>
   <div class="car-main-main-booking" id="car-detail"></div>
+<div id="loader" style="text-align:center; margin: 20px; display:none;">
+  <p>Loading cars...</p>
+</div>
+<div class="car-main-main-booking" id="car-detail"></div>
 
   <div class="upload-car-booking" id="upload">
     <img class="img-upload" src="https://cdn-icons-png.flaticon.com/512/5173/5173034.png" alt="">
@@ -48,54 +52,57 @@
     console.log(pincode);
     console.log(seats);
 
-    fetch(`https://car-on-rent.onrender.com/api/cars/search?pincode=${pincode}&seats=${seats}`)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.json();
-      })
-      .then(cars => {
-        const container = document.getElementById("car-detail");
-        container.innerHTML = "";
+const loader = document.getElementById("loader");
+loader.style.display = "block"; // Show loader
 
-        if (cars.length === 0 || cars.message) {
-          container.innerHTML = "<p>No cars found for your search.</p>";
-          return;
-        }
+fetch(`https://car-on-rent.onrender.com/api/cars/search?pincode=${pincode}&seats=${seats}`)
+  .then(response => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    return response.json();
+  })
+  .then(cars => {
+    loader.style.display = "none"; // Hide loader after data is fetched
+    const container = document.getElementById("car-detail");
+    container.innerHTML = "";
 
-        cars.forEach(car => {
-          const carDiv = document.createElement("div");
-          carDiv.className = "car-main-booking";
+    if (cars.length === 0 || cars.message) {
+      container.innerHTML = "<p>No cars found for your search.</p>";
+      return;
+    }
 
-          carDiv.innerHTML = `
-            <div class="car-image-booking">
-              <img class="car-image-booking" src="${car.imageUrl}" alt="${car.name}"/>
-            </div>
-            <div class="car-detail-booking">
-              <ul>
-                <li><strong>Brand:</strong> ${car.brand}</li>
-                <li><strong>Name:</strong> ${car.name}</li>
-                <li><strong>Price Per Hour:</strong> ₹${car.pricePerHour}</li>
-                <li><strong>Fuel Type:</strong> ${car.fuelType}</li>
-                <li><strong>Seater:</strong> ${car.seats}</li>
-              </ul>
-            </div>
-            <div class="car-font-btn-booking">
-              <i>Available in Your City ${car.pincode}</i><br>
-            
-      <button class="car-btn-booking" onclick="handleBookNow('${car._id}')">Book Now</button>
-      
+    cars.forEach(car => {
+      const carDiv = document.createElement("div");
+      carDiv.className = "car-main-booking";
 
-            </div>
-          `;
+      carDiv.innerHTML = `
+        <div class="car-image-booking">
+          <img class="car-image-booking" src="${car.imageUrl}" alt="${car.name}"/>
+        </div>
+        <div class="car-detail-booking">
+          <ul>
+            <li><strong>Brand:</strong> ${car.brand}</li>
+            <li><strong>Name:</strong> ${car.name}</li>
+            <li><strong>Price Per Hour:</strong> ₹${car.pricePerHour}</li>
+            <li><strong>Fuel Type:</strong> ${car.fuelType}</li>
+            <li><strong>Seater:</strong> ${car.seats}</li>
+          </ul>
+        </div>
+        <div class="car-font-btn-booking">
+          <i>Available in Your City ${car.pincode}</i><br>
+          <button class="car-btn-booking" onclick="handleBookNow('${car._id}')">Book Now</button>
+        </div>
+      `;
 
-          container.appendChild(carDiv);
-        });
-      })
-      .catch(error => {
-        console.error("Fetch error:", error);
-      });
+      container.appendChild(carDiv);
+    });
+  })
+  .catch(error => {
+    loader.style.display = "none"; // Also hide on error
+    console.error("Fetch error:", error);
+    document.getElementById("car-detail").innerHTML = "<p>Failed to load cars. Please try again.</p>";
+  });
 
     function handleBookNow(carId) {
       const token = localStorage.getItem("token");
