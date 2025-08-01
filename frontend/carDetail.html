@@ -48,7 +48,7 @@
     console.log(pincode);
     console.log(seats);
 
-    fetch(`http://localhost:5000/api/cars/search?pincode=${pincode}&seats=${seats}`)
+    fetch(`https://car-on-rent.onrender.com/api/cars/search?pincode=${pincode}&seats=${seats}`)
       .then(response => {
         if (!response.ok) {
           throw new Error("Network response was not ok");

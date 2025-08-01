@@ -64,7 +64,7 @@
     if (!carId) {
       alert("No car selected.");
     } else {
-      fetch(`http://localhost:5000/api/cars/${carId}`)
+      fetch(`https://car-on-rent.onrender.com/api/cars/${carId}`)
         .then(res => res.json())
         .then(car => {
           if (!car || car.message === "Car not found") {
@@ -129,7 +129,7 @@
         customerEmail: customerEmail
       };
 
-      const res = await fetch("http://localhost:5000/api/payment", {
+      const res = await fetch("https://car-on-rent.onrender.com/api/payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)
