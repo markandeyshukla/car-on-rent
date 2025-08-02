@@ -25,7 +25,6 @@ A full-stack web application that allows users to **rent cars by location and se
 ### Backend
 - Node.js + Express.js
 - MongoDB + Mongoose
-- Cloudinary for image upload
 - Hosted on: **Render**
 
 
@@ -68,3 +67,4 @@ Create a .env file in the backend directory with the following:
 # screenshots
 <img width="1237" height="732" alt="image" src="https://github.com/user-attachments/assets/1b794b96-991a-4588-ad5a-9c3604f42b77" />
 <img width="1694" height="598" alt="image" src="https://github.com/user-attachments/assets/d9393d68-9362-4252-aae1-81efdc290834" />
+
