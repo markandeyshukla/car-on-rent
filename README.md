@@ -32,7 +32,7 @@ A full-stack web application that allows users to **rent cars by location and se
 
 1. **Clone** the repository:
    ```bash
-   git clone https://github.com/your-username/your-repo-name.git
+   git clone (https://github.com/markandeyshukla/car-on-rent.git)
 
 # Install backend dependencies:
 - cd backend
@@ -67,4 +67,5 @@ Create a .env file in the backend directory with the following:
 # screenshots
 <img width="1237" height="732" alt="image" src="https://github.com/user-attachments/assets/1b794b96-991a-4588-ad5a-9c3604f42b77" />
 <img width="1694" height="598" alt="image" src="https://github.com/user-attachments/assets/d9393d68-9362-4252-aae1-81efdc290834" />
+
 
