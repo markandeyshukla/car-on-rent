@@ -60,12 +60,13 @@ Create a .env file in the backend directory with the following:
 [LinkedIn](https://www.linkedin.com/in/markandey-shukla-078242203/) | [Portfolio](https://markandeyshukla.netlify.app)
 
 #  Live Website
-[Click here to view the live project](https://car-on-rent.onrender.com)
+[Click here to view the live project](https://gadilejao.netlify.app)
 
 
 # screenshots
 <img width="1237" height="732" alt="image" src="https://github.com/user-attachments/assets/1b794b96-991a-4588-ad5a-9c3604f42b77" />
 <img width="1694" height="598" alt="image" src="https://github.com/user-attachments/assets/d9393d68-9362-4252-aae1-81efdc290834" />
+
 
 
 
