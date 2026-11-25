@@ -4,7 +4,7 @@ import nodemailer from 'nodemailer';
 
 export const sendOrderConfirmationEmail = async (customerEmail, carDetails, driverDetails) => {
   try {
-    console.log("Sending email to:", customerEmail);
+    console.log(`Sending email to: ${customerEmail} from: ${process.env.EMAIL_USER}`);
     if (!customerEmail) {
       console.error("Recipient email address is missing!");
       return;
@@ -19,7 +19,7 @@ export const sendOrderConfirmationEmail = async (customerEmail, carDetails, driv
     });
 
     const mailOptions = {
-      from: process.env.EMAIL_USER,
+      from: `Car Rental Service ${process.env.EMAIL_USER}`,
       to: customerEmail,
       subject: 'Your Car Booking is Confirmed!',
       html: `
