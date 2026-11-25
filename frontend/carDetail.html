@@ -55,7 +55,7 @@
 const loader = document.getElementById("loader");
 loader.style.display = "block"; // Show loader
 
-fetch(`https://car-on-rent.onrender.com/api/cars/search?pincode=${pincode}&seats=${seats}`)
+fetch(`http://localhost:5000/api/cars/search?pincode=${pincode}&seats=${seats}`)
   .then(response => {
     if (!response.ok) {
       throw new Error("Network response was not ok");

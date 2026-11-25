@@ -31,8 +31,6 @@ if (token) {
 {/* // Logout Function */ }
 function logout() {
   localStorage.clear();
-  alert("तुसी जा रे हो?");
-  alert("तुसी ना जाओ")
   alert("logout successful")
   window.location.href = "index.html";
 }
